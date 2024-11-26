@@ -46,7 +46,7 @@ header {
 }
 
 .sidebar-icon-container:hover {
-    background-color: var(--primary-color);
+    background-color: var(--secondary-color);
     cursor: pointer;
 }
 
@@ -81,6 +81,10 @@ header h2 {
     top: 0;
     left: 0;
     background-color: var(--sidebar-color);
+}
+
+.open-close-sidebar {
+    visibility: hidden;
 }
 
 .tasks-projects-container {

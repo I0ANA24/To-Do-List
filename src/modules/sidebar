@@ -1,0 +1,12 @@
+export function handleSidebar() {
+    openCloseSidebar();
+}
+
+function openCloseSidebar() {
+    const sidebarButton = document.querySelector(".sidebar-icon-container");
+    const sidebarContainer = document.querySelector(".sidebar-container");
+
+    sidebarButton.addEventListener("click", () => {
+        sidebarContainer.classList.toggle("open-close-sidebar");
+    });
+}

@@ -1,4 +1,4 @@
 import "./styles.css";
-import { greeting } from "./greeting.js";
+import { handleSidebar } from "./modules/sidebar";
 
-console.log(greeting);
+handleSidebar();
