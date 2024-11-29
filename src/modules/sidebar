@@ -3,10 +3,26 @@ export function handleSidebar() {
 }
 
 function openCloseSidebar() {
-    const sidebarButton = document.querySelector(".sidebar-icon-container");
-    const sidebarContainer = document.querySelector(".sidebar-container");
+    const sidebarButtonContainer = document.getElementById("sidebar-icon-container");
+    const sidebarButton = document.getElementById("sidebar-icon");
+    const sidebarContainer = document.getElementById("sidebar-container");
 
-    sidebarButton.addEventListener("click", () => {
+    sidebarButtonContainer.addEventListener("click", () => {
         sidebarContainer.classList.toggle("open-close-sidebar");
+        console.log("sbc");
+    });
+
+
+    document.addEventListener("click", (event) => {
+        if(
+            !sidebarContainer.classList.contains("open-close-sidebar") && 
+            !sidebarContainer.contains(event.target) && 
+            event.target !== sidebarButtonContainer && 
+            event.target !== sidebarButton
+        ) {
+            sidebarContainer.classList.add("open-close-sidebar");
+            event.preventDefault();
+            console.log("here")
+        }
     });
 }
