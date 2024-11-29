@@ -152,6 +152,10 @@ main {
     /* background-color: black; */
 }
 
+.access-today-page, .access-tomorrow-page, .access-this-week-page, .access-planned-page, .access-completed-page, .access-project1-page {
+    display: none;
+}
+
 main h2 {
     font-weight: 500;
     margin-bottom: 30px;
