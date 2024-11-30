@@ -5,25 +5,29 @@ export function handleSidebar() {
 
 function openCloseSidebar() {
     const sidebarButtonContainer = document.getElementById("sidebar-icon-container");
-    const sidebarButton = document.getElementById("sidebar-icon");
     const sidebarContainer = document.getElementById("sidebar-container");
     const overlay = document.getElementById("overlay");
 
-    sidebarButtonContainer.addEventListener("click", () => {
-        sidebarContainer.classList.toggle("open-close-sidebar");
-        if(sidebarContainer.classList.contains("open-close-sidebar")) {
-            overlay.style.display = "none";
+    sidebarButtonContainer?.addEventListener("click", () => {
+        sidebarContainer?.classList.toggle("open-close-sidebar");
+        if(sidebarContainer?.classList.contains("open-close-sidebar")) {
+            if(overlay) {
+                overlay.style.display = "none";
+            }
         } else {
-            overlay.style.display = "block";
-        }
+            if(overlay) {
+                overlay.style.display = "block";
+            }        }
     });
 
 
-    overlay.addEventListener("click", () => {
-        sidebarContainer.classList.add("open-close-sidebar");
+    overlay?.addEventListener("click", () => {
+        sidebarContainer?.classList.add("open-close-sidebar");
         overlay.style.display = "none";
     });
 }
+
+
 
 function pagesAccess() {
     class sidebarPageRelationship {
@@ -38,6 +42,18 @@ function pagesAccess() {
             this.pageId = pageId;
             this.pageClass = pageClass;
         }
+
+        getSidebarId() {
+            return this.sidebarId;
+        }
+
+        getPageId() {
+            return this.pageId;
+        }
+
+        getPageClass() {
+            return this.pageClass;
+        }
     }
 
 
@@ -50,86 +66,54 @@ function pagesAccess() {
         new sidebarPageRelationship("project1-sidebar", "project1-page", "access-project1-page")
     ];
 
-    let currentSidebarPageRelationship = new sidebarPageRelationship();
-    currentSidebarPageRelationship = sidebarToPageMap[0];
-    let currentSidebarPage = document.getElementById(currentSidebarPageRelationship.pageId);
+    let currentSidebarPageRelationship = sidebarToPageMap[0];
+    let currentSidebarPage = document.getElementById(currentSidebarPageRelationship.getPageId());
     
-    sidebarToPageMap.forEach(({sidebarId, pageId, pageClass}) => {
-        configureSidebarAction(sidebarId, pageId, pageClass);
+    sidebarToPageMap.forEach((relationship) => {
+        configureSidebarAction(
+            relationship.getSidebarId(),
+            relationship.getPageId(),
+            relationship.getPageClass()
+        );
     });
 
     function configureSidebarAction(sidebarId, pageId, pageClass) {
         const sidebarElement = document.getElementById(sidebarId);
         const pageElement = document.getElementById(pageId);
 
-        sidebarElement.addEventListener("click", () => {
-            if (sidebarId !== currentSidebarPageRelationship.sidebarId) {
+        sidebarElement?.addEventListener("click", () => {
+            if (sidebarId !== currentSidebarPageRelationship.getSidebarId()) {
                 switchPages();
                 updateCurrentSidebar();
+                closeSidebar();
+            } else {
                 closeSidebar();
             }
         });
 
         function switchPages() {
-            pageElement.classList.toggle(pageClass);
-            currentSidebarPage.classList.toggle(currentSidebarPageRelationship.pageClass);
+            pageElement?.classList.toggle(pageClass);
+            currentSidebarPage?.classList.toggle(currentSidebarPageRelationship.getPageClass());
         }
 
         function updateCurrentSidebar() {
+            const newActiveSidebar = document.getElementById(sidebarId);
+            const oldActiveSidebar = document.getElementById(currentSidebarPageRelationship.getSidebarId());
+            newActiveSidebar?.classList.toggle("active-task-project");
+            oldActiveSidebar?.classList.toggle("active-task-project");
+            
             currentSidebarPageRelationship.setRelationship(sidebarId, pageId, pageClass);
-            currentSidebarPage = document.getElementById(currentSidebarPageRelationship.pageId);
+            currentSidebarPage = document.getElementById(currentSidebarPageRelationship.getPageId());
         }
 
         function closeSidebar() {
             const sidebarContainer = document.getElementById("sidebar-container");
             const overlay = document.getElementById("overlay");
 
-            sidebarContainer.classList.toggle("open-close-sidebar");
-            overlay.style.display = "none";
+            sidebarContainer?.classList.toggle("open-close-sidebar");
+            if(overlay) {
+                overlay.style.display = "none";
+            }
         }
     }
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-//     const todaySidebar = document.getElementById("today-sidebar");
-//     const tomorrowSidebar = document.getElementById("tomorrow-sidebar");
-//     const thisWeekSidebar = document.getElementById("this-week-sidebar");
-//     const plannedSidebar = document.getElementById("planned-sidebar");
-//     const completedSidebar = document.getElementById("completed-sidebar");
-//     const project1Sidebar = document.getElementById("project1-sidebar");
-
-//     const todayPage = document.getElementById("today-page");
-//     const tomorrowPage = document.getElementById("tomorrow-page");
-//     const thisWeekPage = document.getElementById("this-week-page");
-//     const plannedPage = document.getElementById("planned-page");
-//     const completedPage = document.getElementById("completed-page");
-//     const project1Page = document.getElementById("project1-page");
-
-//     const sidebarArray = [todaySidebar, tomorrowSidebar, thisWeekSidebar, plannedSidebar, completedSidebar, project1Sidebar];
-
-//     const pagesArray = [todayPage, tomorrowPage, thisWeekPage, plannedPage, completedPage, project1Page]
-
-//     const pagesClassesArray = ["access-today-page", "access-tomorrow-page", "access-this-week-page", "access-planned-page", "access-completed-page", "access-project1-page"];
-
-//     const currentSidebarPage = todaySidebar;
-
-//     sidebarArray.forEach((sidebarPage, index) => {
-//         sidebarPage.addEventListener("click", () => {
-//             console.log(pagesClassesArray[index]);
-//             if(sidebarPage !== currentSidebarPage) {
-//                 pagesArray[index].classList.toggle(pagesClassesArray[index]);
-//             }
-//         });
-//     });
-// }
