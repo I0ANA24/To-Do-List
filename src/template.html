@@ -18,7 +18,7 @@
         <img src="./assets/logo.svg" alt="logo" id="logo-icon">
         <h2>ToDo</h2>
     </header>
-    <div id="sidebar-container" class="sidebar-container open-close-sidebar">
+    <div id="sidebar-container" class="sidebar-container">
         <div class="tasks-projects-container">
             <h5>Tasks</h5>
             <div id="today-sidebar" class="task-project active-task-project">
@@ -66,10 +66,17 @@
                 </div>
                 <p>0</p>
             </div>
-            <div id="add-project-button" class="task-project">
+            <!-- <div id="add-project-button" class="task-project">
                 <div class="sidebar-left-task">
                     <img src="./assets/add.svg" alt="today-icon">
                     <h4>Add Project</h4>
+                </div>
+            </div> -->
+            <div id="new-project">
+                <input type="text">
+                <div id="new-project-buttons-container">
+                    <button id="cancel-button" class="cancel-add">Cancel</button>
+                    <button id="add-button" class="cancel-add">Add</button>
                 </div>
             </div>
         </div>
