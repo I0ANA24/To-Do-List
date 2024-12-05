@@ -146,6 +146,7 @@ function handleAddProject() {
     const addButton = document.getElementById("add-button");
 
     addProjectAction(addProject, addProjectContainer, addButton, inputElement);
+    cancelButtonAction(inputElement, cancelButton, addProject, addProjectContainer);
     addButtonAction(inputElement, addButton, addProject, addProjectContainer);
 
     function addProjectAction(addProject, addProjectContainer, addButton, inputElement) {
@@ -275,6 +276,14 @@ function handleAddProject() {
 
 
         }
+    }
+
+    function cancelButtonAction(inputElement, cancelButton, addProject, addProjectContainer) {
+        cancelButton.addEventListener("click", () => {
+            inputElement.value = "";
+            addProjectContainer.classList.toggle("open-close-new-project");
+            addProject.style.display = "flex";
+        })
     }
 }
 
