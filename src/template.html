@@ -19,64 +19,67 @@
         <h2>ToDo</h2>
     </header>
     <div id="sidebar-container" class="sidebar-container">
-        <div class="tasks-projects-container">
-            <h5>Tasks</h5>
-            <div id="today-sidebar" class="task-project active-task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/today.svg" alt="today-icon">
-                    <h4>Today</h4>
+        <div id="sidebar-scroll-container">
+            <div class="tasks-projects-container">
+                <h5>Tasks</h5>
+                <div id="today-sidebar" class="task-project active-task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/today.svg" alt="today-icon">
+                        <h4>Today</h4>
+                    </div>
+                    <p>0</p>
                 </div>
-                <p>0</p>
+                <div id="tomorrow-sidebar" class="task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/tomorrow.svg" alt="today-icon">
+                        <h4>Tomorrow</h4>
+                    </div>
+                    <p>0</p>
+                </div>
+                <div id="this-week-sidebar" class="task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/week.svg" alt="today-icon">
+                        <h4>This Week</h4>
+                    </div>
+                    <p>0</p>
+                </div>
+                <div id="planned-sidebar" class="task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/planned.svg" alt="today-icon">
+                        <h4>Planned</h4>
+                    </div>
+                    <p>0</p>
+                </div>
+                <div id="completed-sidebar" class="task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/completed.svg" alt="today-icon">
+                        <h4>Completed</h4>
+                    </div>
+                    <p>0</p>
+                </div>
             </div>
-            <div id="tomorrow-sidebar" class="task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/tomorrow.svg" alt="today-icon">
-                    <h4>Tomorrow</h4>
+            <div id="projects-container" class="tasks-projects-container">
+                <h5>Projects</h5>
+                <div id="project1-sidebar" class="task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/project.svg" alt="today-icon">
+                        <h4>Project 1</h4>
+                    </div>
+                    <p>0</p>
                 </div>
-                <p>0</p>
-            </div>
-            <div id="this-week-sidebar" class="task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/week.svg" alt="today-icon">
-                    <h4>This Week</h4>
+                <div id="add-project-button" class="task-project">
+                    <div class="sidebar-left-task">
+                        <img src="./assets/add.svg" alt="today-icon">
+                        <h4>Add Project</h4>
+                    </div>
                 </div>
-                <p>0</p>
-            </div>
-            <div id="planned-sidebar" class="task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/planned.svg" alt="today-icon">
-                    <h4>Planned</h4>
-                </div>
-                <p>0</p>
-            </div>
-            <div id="completed-sidebar" class="task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/completed.svg" alt="today-icon">
-                    <h4>Completed</h4>
-                </div>
-                <p>0</p>
-            </div>
-        </div>
-        <div class="tasks-projects-container">
-            <h5>Projects</h5>
-            <div id="project1-sidebar" class="task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/today.svg" alt="today-icon">
-                    <h4>Project 1</h4>
-                </div>
-                <p>0</p>
-            </div>
-            <!-- <div id="add-project-button" class="task-project">
-                <div class="sidebar-left-task">
-                    <img src="./assets/add.svg" alt="today-icon">
-                    <h4>Add Project</h4>
-                </div>
-            </div> -->
-            <div id="new-project">
-                <input type="text">
-                <div id="new-project-buttons-container">
-                    <button id="cancel-button" class="cancel-add">Cancel</button>
-                    <button id="add-button" class="cancel-add">Add</button>
+                
+                <div id="new-project" class="open-close-new-project">
+                    <input type="text" id="new-project-input" placeholder="Type here">
+                    <div id="new-project-buttons-container">
+                        <button id="cancel-button" class="cancel-add">Cancel</button>
+                        <button id="add-button" class="cancel-add">Add</button>
+                    </div>
                 </div>
             </div>
         </div>

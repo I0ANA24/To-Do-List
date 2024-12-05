@@ -1,4 +1,4 @@
 import "./styles.css";
-import { handleSidebar } from "./modules/sidebar";
+import { handleSidebar } from "./modules/sidebar.js";
 
 handleSidebar();
