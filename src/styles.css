@@ -142,6 +142,7 @@ header h2 {
     border-radius: 10px;
     margin-bottom: 5px;
     transition: all 0.1s ease;
+    position: relative;
 }
 
 .active-task-project {
@@ -151,6 +152,39 @@ header h2 {
 .task-project:hover {
     background-color: var(--primary-color);
     cursor: pointer;
+}
+
+.task-project .count {
+    font-size: 0.9em;
+    transform: all;
+}
+
+.task-project:hover .count {
+    display: none;
+}
+
+.task-project:hover .not-hover-sidebar {
+    display: block;
+}
+
+.task-project .hide-count {
+    display: none;
+}
+
+.task-project .options {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-75%);
+    font-size: 1.5em;
+}
+
+.task-project:hover .options {
+    display: block;
+}
+
+.task-project .hide-options {
+    display: none;
 }
 
 .sidebar-left-task {

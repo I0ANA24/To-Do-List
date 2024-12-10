@@ -110,7 +110,25 @@ const pagAccess = (function pagesAccess() {
             const oldActiveSidebar = document.getElementById(currentSidebarPageRelationship.getSidebarId());
             newActiveSidebar?.classList.toggle("active-task-project");
             oldActiveSidebar?.classList.toggle("active-task-project");
-            
+
+            if(newActiveSidebar.classList.contains("prj")) {
+                const newActiveSidebarPElements = newActiveSidebar.querySelectorAll('p');
+                const newActiveSidebarP1 = newActiveSidebarPElements[0];
+                const newActiveSidebarP2 = newActiveSidebarPElements[1];
+
+                newActiveSidebarP1.classList.add("hide-count");
+                newActiveSidebarP2.classList.remove("hide-options");
+            }
+
+            if(oldActiveSidebar.classList.contains("prj")) {
+                const oldActiveSidebarPElements = oldActiveSidebar.querySelectorAll('p');
+                const oldActiveSidebarP1 = oldActiveSidebarPElements[0];
+                const oldActiveSidebarP2 = oldActiveSidebarPElements[1];
+
+                oldActiveSidebarP1.classList.remove("hide-count");
+                oldActiveSidebarP2.classList.add("hide-options");
+            }
+
             currentSidebarPageRelationship.setRelationship(sidebarId, pageId, pageClass);
             currentSidebarPage = document.getElementById(currentSidebarPageRelationship.getPageId());
         }
@@ -183,16 +201,18 @@ function handleAddProject() {
         function addTheNewProject(addProject, inputElement) {
             const projectsContainer = document.getElementById("projects-container");
             const newDiv = document.createElement("div");
+            newDiv.id = `${inputElement.value}-sidebar`;
+            newDiv.classList.add("task-project");
+            newDiv.classList.add("prj");
             numberOfProjects++;
     
             newDiv.innerHTML = `
-                <div id="${inputElement.value}-sidebar" class="task-project">
-                    <div class="sidebar-left-task">
-                        <img src="${projectIcon}" alt="today-icon">
-                        <h4>${inputElement.value}</h4>
-                    </div>
-                    <p>0</p>
+                <div class="sidebar-left-task">
+                    <img src="${projectIcon}" alt="today-icon">
+                    <h4>${inputElement.value}</h4>
                 </div>
+                <p class = "count">0</p>
+                <p class="options hide-options">...</p>
             `;
     
             projectsContainer.insertBefore(newDiv, addProject);
