@@ -218,12 +218,31 @@ function handleAddProject() {
     
     let numberOfProjects = 1;
     
+    function isOnlyLetters(inputValue) {
+        const regex = /^[a-zA-Z]+$/;
+        return regex.test(inputValue);
+    }
+
     function addButtonAction(inputElement, addButton, addProject, addProjectContainer) {
+        const attentionParagraph = document.createElement('p');
+        attentionParagraph.textContent = "Please insert only letters!";
+        attentionParagraph.style.width = "100%";
+        attentionParagraph.style.textAlign = "center";
+        attentionParagraph.style.color = "rgb(231, 84, 84)";
+        attentionParagraph.style.display = "none";
+        addProjectContainer.appendChild(attentionParagraph);
+        
         inputElement.addEventListener("input", () => {
-            if(inputElement.value.trim() !== "") {
-                addButton.disabled = false;
-            } else {
-                addButton.disabled = true;
+            if(inputElement.value === "") {
+                attentionParagraph.style.display = "none";
+            } else if(inputElement.value.trim() !== "") {
+                if(isOnlyLetters(inputElement.value)) {
+                    addButton.disabled = false;
+                    attentionParagraph.style.display = "none";
+                } else {
+                    addButton.disabled = true;
+                    attentionParagraph.style.display = "block";
+                }
             }
         });
     
@@ -235,6 +254,8 @@ function handleAddProject() {
                 addTheNewProject(addProject, inputElement);
                 addTheNewPage(inputElement);
                 inputElement.value = "";
+            } else {
+                console.log("Please insert only letters!");
             }
         });
     
