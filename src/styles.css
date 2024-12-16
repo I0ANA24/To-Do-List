@@ -45,7 +45,7 @@ header {
     margin-right: 10px;
     border-radius: 5px;
     transition: all 0.2s ease;
-    z-index: 10000;
+    z-index: 6;
 }
 
 .sidebar-icon-container:hover {
@@ -56,7 +56,7 @@ header {
 #sidebar-icon {
     width: 20px;
     height: auto;
-    z-index: 1000;
+    z-index: 8;
 }
 
 #logo-icon {
@@ -72,7 +72,7 @@ header h2 {
     color: var(--primary-text);
 }
 
-#overlay {
+#overlay, #overlay2 {
     position: fixed;
     top: 0;
     left: 0;
@@ -81,6 +81,11 @@ header h2 {
     background-color: rgba(0, 0, 0, 0.5);
     z-index: 4;
     display: none;
+}
+
+#overlay2 {
+    z-index: 10;
+    background-color: transparent;
 }
 
 .sidebar-container {
@@ -200,6 +205,49 @@ header h2 {
 
 .sidebar-left-task h4 {
     font-weight: 500;
+}
+
+.options-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: baseline;
+    width: 90px;
+    height: 55px;
+    position: absolute;
+    top: 65%;
+    right: 10px;
+    z-index: 1000;
+    background-color: var(--secondary-color);
+    font-size: 0.9em;
+    border-radius: 7px;
+    overflow: hidden;
+    z-index: 70000000;
+}
+
+.hide-options-container {
+    display: none;
+}
+
+.rename, .delete {
+    width: 100%;
+    height: 50%;
+    display: flex;
+    justify-content: center;
+}
+
+.rename {
+    align-items: end;
+    padding-bottom: 2.5px;
+}
+
+.delete {
+    align-items: baseline;
+    padding-top: 2.5px;
+}
+
+.rename:hover, .delete:hover {
+    background-color: var(--tertiary-color);
 }
 
 #add-project-button {

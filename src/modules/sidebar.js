@@ -11,7 +11,7 @@ function openCloseSidebar() {
     const sidebarContainer = document.getElementById("sidebar-container");
     const overlay = document.getElementById("overlay");
 
-    sidebarButtonContainer?.addEventListener("click", () => {
+    sidebarButtonContainer?.addEventListener("click", (event) => {
         sidebarContainer?.classList.toggle("open-close-sidebar");
         if(sidebarContainer?.classList.contains("open-close-sidebar")) {
             if(overlay) {
@@ -22,12 +22,25 @@ function openCloseSidebar() {
                 overlay.style.display = "block";
             }
         }
+
+        const overlay2 = document.getElementById("overlay2");
+        if(overlay2.style.display === "block") {
+            overlay2.style.display = "none"; 
+        }
+
+        const hideOptions = document.querySelectorAll(".options-container");
+        hideOptions.forEach(optionsContainer => {
+            optionsContainer.classList.add("hide-options-container");
+        });
+
     });
 
 
-    overlay?.addEventListener("click", () => {
-        sidebarContainer?.classList.add("open-close-sidebar");
-        overlay.style.display = "none";
+    overlay?.addEventListener("click", (event) => {
+        if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
+            sidebarContainer?.classList.add("open-close-sidebar");
+            overlay.style.display = "none";
+        }
     });
 }
 
@@ -80,15 +93,42 @@ const pagAccess = (function pagesAccess() {
         const sidebarElement = document.getElementById(sidebarId);
         const pageElement = document.getElementById(pageId);
 
-        sidebarElement?.addEventListener("click", () => {
+        sidebarElement?.addEventListener("click", (event) => {
             if (sidebarId !== currentSidebarPageRelationship.getSidebarId()) {
-                switchPages();
-                updateCurrentSidebar();
-                closeSidebar();
+                if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
+                    if(!event.target.classList.contains("options")) {
+                        switchPages();
+                        updateCurrentSidebar();
+                        closeSidebar();
+                    } else {
+                        addClickEventForOptions(event.target);
+                    }
+                }
             } else {
-                closeSidebar();
+                if (!event.target.classList.contains("options")) {
+                    if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
+                        closeSidebar();
+                    }
+                } else {
+                    addClickEventForOptions(event.target);
+                }
             }
         });
+
+        function addClickEventForOptions(options) {
+            const optionsContainer = options.nextElementSibling;
+            const overlay2 = document.getElementById("overlay2");
+            
+
+            optionsContainer.classList.remove("hide-options-container");
+            overlay2.style.display = "block";
+
+            overlay2.addEventListener("click", () => {
+                optionsContainer.classList.add("hide-options-container");
+                overlay2.style.display = "none";
+
+            })
+        }
 
         if(isNewProject === true) {
             if (sidebarId !== currentSidebarPageRelationship.getSidebarId()) {
@@ -213,6 +253,10 @@ function handleAddProject() {
                 </div>
                 <p class = "count">0</p>
                 <p class="options hide-options">...</p>
+                <div class="options-container hide-options-container">
+                    <p class="rename">Rename</p>
+                    <p class="delete">Delete</p>
+                </div>
             `;
     
             projectsContainer.insertBefore(newDiv, addProject);
@@ -220,7 +264,6 @@ function handleAddProject() {
 
         function addTheNewPage(inputElement) {
             const newPage = document.createElement("div");
-            console.log(inputElement.value);
             newPage.id = `${inputElement.value}-page`;
             newPage.classList.add(`access-${inputElement.value}-page`);
 
