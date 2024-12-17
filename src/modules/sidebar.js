@@ -116,6 +116,10 @@ const pagAccess = (function pagesAccess() {
         });
 
         function addClickEventForOptions(options) {
+            options.style.display = "block";
+            const countElement = options.previousElementSibling;
+            countElement.style.display = "none";
+
             const optionsContainer = options.nextElementSibling;
             const overlay2 = document.getElementById("overlay2");
             
@@ -126,7 +130,8 @@ const pagAccess = (function pagesAccess() {
             overlay2.addEventListener("click", () => {
                 optionsContainer.classList.add("hide-options-container");
                 overlay2.style.display = "none";
-
+                options.style.removeProperty("display");
+                countElement.style.removeProperty("display");
             })
         }
 
@@ -231,7 +236,7 @@ function handleAddProject() {
         attentionParagraph.style.color = "rgb(231, 84, 84)";
         attentionParagraph.style.display = "none";
         addProjectContainer.appendChild(attentionParagraph);
-        
+
         inputElement.addEventListener("input", () => {
             if(inputElement.value === "") {
                 attentionParagraph.style.display = "none";
