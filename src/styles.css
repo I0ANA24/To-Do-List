@@ -212,10 +212,10 @@ header h2 {
     flex-direction: column;
     justify-content: center;
     align-items: baseline;
-    width: 90px;
-    height: 55px;
+    width: 100px;
+    height: 65px;
     position: absolute;
-    top: 65%;
+    top: 85%;
     right: 10px;
     z-index: 1000;
     background-color: var(--secondary-color);
@@ -223,6 +223,9 @@ header h2 {
     border-radius: 7px;
     overflow: hidden;
     z-index: 70000000;
+    padding: 8px;
+    border: 1px solid #333;
+    overflow: visible;
 }
 
 .hide-options-container {
@@ -234,6 +237,7 @@ header h2 {
     height: 50%;
     display: flex;
     justify-content: center;
+    border-radius: 5px;
 }
 
 .rename {
@@ -335,7 +339,7 @@ main {
     align-items: baseline;
 }
 
-#today-page, #tomorrow-page, #this-week-page, #planned-page, #completed-page, #project1-page {
+#today-page, #tomorrow-page, #this-week-page, #planned-page, #completed-page, #Project-page {
     width: 700px;
     max-width: 93vw;
     display: flex;
@@ -344,7 +348,7 @@ main {
     align-items: center;
 }
 
-.access-today-page, .access-tomorrow-page, .access-this-week-page, .access-planned-page, .access-completed-page, .access-project1-page {
+.access-today-page, .access-tomorrow-page, .access-this-week-page, .access-planned-page, .access-completed-page, .access-Project-page {
     display: none !important;
 }
 
@@ -504,7 +508,10 @@ main .pc-text {
     border-radius: 10px;
     padding: 15px 30px !important;
     justify-content: space-between;
-    
+}
+
+.hide-rename-project-container {
+    display: none !important;
 }
 
 .rename-project-container h2 {

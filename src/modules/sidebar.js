@@ -11,7 +11,7 @@ function openCloseSidebar() {
     const sidebarContainer = document.getElementById("sidebar-container");
     const overlay = document.getElementById("overlay");
 
-    sidebarButtonContainer?.addEventListener("click", (event) => {
+    sidebarButtonContainer?.addEventListener("click", () => {
         sidebarContainer?.classList.toggle("open-close-sidebar");
         if(sidebarContainer?.classList.contains("open-close-sidebar")) {
             if(overlay) {
@@ -71,14 +71,13 @@ const pagAccess = (function pagesAccess() {
         }
     }
 
-
     const sidebarToPageMap = [
         new sidebarPageRelationship("today-sidebar", "today-page", "access-today-page"), 
         new sidebarPageRelationship("tomorrow-sidebar", "tomorrow-page", "access-tomorrow-page"), 
         new sidebarPageRelationship("this-week-sidebar", "this-week-page", "access-this-week-page"), 
         new sidebarPageRelationship("planned-sidebar", "planned-page", "access-planned-page"), 
         new sidebarPageRelationship("completed-sidebar", "completed-page", "access-completed-page"), 
-        new sidebarPageRelationship("project1-sidebar", "project1-page", "access-project1-page")
+        new sidebarPageRelationship("Project-sidebar", "Project-page", "access-Project-page")
     ];
 
     const addRelationship = (sidebarId, pageId, pageClass) => {
@@ -90,8 +89,8 @@ const pagAccess = (function pagesAccess() {
     let currentSidebarPage = document.getElementById(currentSidebarPageRelationship.getPageId());
 
     const configureSidebarAction = (sidebarId, pageId, pageClass, isNewProject) => {
-        const sidebarElement = document.getElementById(sidebarId);
-        const pageElement = document.getElementById(pageId);
+        let sidebarElement = document.getElementById(sidebarId);
+        let pageElement = document.getElementById(`${pageId}`);
 
         sidebarElement?.addEventListener("click", (event) => {
             if (sidebarId !== currentSidebarPageRelationship.getSidebarId()) {
@@ -109,7 +108,8 @@ const pagAccess = (function pagesAccess() {
                     if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
                         closeSidebar();
                     }
-                } else {
+                } else if (event.target.classList.contains("options")) {
+                    console.log(event.target.parentElement, "target");
                     addClickEventForOptions(event.target);
                 }
             }
@@ -122,17 +122,143 @@ const pagAccess = (function pagesAccess() {
 
             const optionsContainer = options.nextElementSibling;
             const overlay2 = document.getElementById("overlay2");
-            
+            const renameProjectContainer = document.querySelector(".rename-project-container");
 
             optionsContainer.classList.remove("hide-options-container");
             overlay2.style.display = "block";
 
-            overlay2.addEventListener("click", () => {
+            function cancelOrOverlay2() {
                 optionsContainer.classList.add("hide-options-container");
                 overlay2.style.display = "none";
                 options.style.removeProperty("display");
                 countElement.style.removeProperty("display");
-            })
+                renameProjectContainer.classList.add("hide-rename-project-container");
+            }
+
+            overlay2.addEventListener("click", () => {
+               cancelOrOverlay2();
+               renameInputButton.value = "";
+            });
+
+            const renameElement = optionsContainer.querySelector(".rename");
+            const renameInputButtonsContainer = renameProjectContainer.querySelector(".rename-ib");
+            const renameInputButton = renameInputButtonsContainer.querySelector("#new-project-input");
+            const renameAddButton = renameInputButtonsContainer.querySelector("#add-button");
+
+            renameElement.addEventListener("click", renameElementClickEventFunction);
+
+            function renameElementClickEventFunction() {
+                renameProjectContainer.classList.remove("hide-rename-project-container");
+                renameAddButton.disabled = true;
+                renameInputButton.focus();
+                optionsContainer.classList.add("hide-options-container");
+
+                renameEvent(renameInputButtonsContainer, renameInputButton, renameAddButton);
+            }
+
+            function renameEvent(renameInputButtonsContainer, renameInputButton, renameAddButton) {
+                renameElement.removeEventListener("click", renameElementClickEventFunction);
+                inputVerification(renameInputButtonsContainer, renameInputButton, renameAddButton);
+
+                renameAddButton.addEventListener("click", renameAddButtonClickEventFunction);
+
+                function renameAddButtonClickEventFunction() {
+                    let optionsParentId = options.parentElement?.id;
+                    console.log(optionsParentId, options);
+                    if(renameAddButton.disabled === false) {
+                        console.log(options.parentElement);
+                        const optionsParent = document.getElementById(`${optionsParentId}`);
+                        if(renameInputButton.value !== "") {
+                            optionsParentId = optionsParent.id;
+                            console.log(optionsParentId);
+                            console.log(optionsParent);
+                            console.log(optionsParentId);
+                            handleRenameProject(optionsParent);
+                            cancelOrOverlay2();
+                            console.log(optionsParent.id);
+                            optionsParentId = optionsParent.id;
+                            console.log(optionsParentId, optionsParent.id);
+                        }
+                    }
+
+                    renameAddButton.removeEventListener("click", renameAddButtonClickEventFunction);
+                }
+            }
+
+            function handleRenameProject(optionsParent) {
+                console.log(optionsParent);
+                const sidebarFolder = optionsParent;
+                const sidebarFolderName = sidebarFolder.querySelector("h4");
+                const oldSidebarFolderName = sidebarFolderName.textContent;
+                const pageName = document.getElementById(`${oldSidebarFolderName}-page`).querySelector("h2");
+                pageName.textContent = renameInputButton.value;
+                const oldSidebarId = sidebarFolder.id;
+                const newSidebarId = `${renameInputButton.value}-sidebar`;
+                const newPageId = `${renameInputButton.value}-page`;
+                const newPageClass = `access-${renameInputButton.value}-page`;
+
+                sidebarFolderName.textContent = renameInputButton.value;
+                sidebarFolder.id = newSidebarId;
+                // options = document.getElementById(`${newSidebarId}`).querySelector(".options");
+                // console.log(options, newSidebarId, document.getElementById(`${newSidebarId}`));
+
+                // Update the relationship in sidebarToPageMap
+                const relationship = sidebarToPageMap.find(rel => rel.getSidebarId() === oldSidebarId);
+                if (relationship) {
+                    relationship.setRelationship(newSidebarId, newPageId, newPageClass);
+                }
+
+                sidebarId = newSidebarId;
+                pageId = newPageId;
+                pageClass = newPageClass;
+
+                pageUpdate();
+
+                function pageUpdate() {
+                    const page = document.getElementById(`${oldSidebarFolderName}-page`);
+                    page.id = newPageId;
+                    
+                    if(page.classList.contains(`access-${oldSidebarFolderName}-page`)) {
+                        page.classList.remove(`access-${oldSidebarFolderName}-page`);
+                        page.classList.add(newPageClass);
+                    }
+
+                    updateCSSRules();
+
+                    function updateCSSRules() {
+                        const styleSheets = Array.from(document.styleSheets);
+    
+                        styleSheets.forEach(sheet => {
+                            try {
+                                const rules = Array.from(sheet.cssRules || sheet.rules); // Compatibilitate între browsere
+                                rules.forEach((rule, index) => {
+                                    if (rule.selectorText && rule.selectorText.includes(`.access-${oldSidebarFolderName}-page`)) {
+                                        // Creează un selector nou, înlocuind .access-Project-page cu .access-new-page
+                                        const newSelector = rule.selectorText.replace(`.access-${oldSidebarFolderName}-page`, `.${newPageClass}`);
+    
+                                        // Adaugă noua regulă și șterge pe cea veche
+                                        sheet.deleteRule(index);
+                                        sheet.insertRule(`${newSelector} { ${rule.style.cssText} }`, index);
+                                    }
+
+                                    if(rule.selectorText && rule.selectorText.includes(`#${oldSidebarFolderName}-page`)) {
+                                        const newSelector = rule.selectorText.replace(`#${oldSidebarFolderName}-page`, `#${newPageId}`);
+                                        sheet.deleteRule(index);
+                                        sheet.insertRule(`${newSelector} { ${rule.style.cssText} }`, index);
+                                    }
+                                });
+                            } catch (err) {
+                                console.warn("Nu s-a putut accesa stylesheet-ul:", err);
+                            }
+                        });
+                    }    
+                }
+
+                sidebarElement = document.getElementById(sidebarId);
+                pageElement = document.getElementById(`${pageId}`);
+                
+                renameInputButton.value = "";
+            }
         }
 
         if(isNewProject === true) {
@@ -201,9 +327,49 @@ const pagAccess = (function pagesAccess() {
     return { configureSidebarAction, addRelationship };
 })();
 
+function inputVerification(projectContainer, inputElement, addButton) {
+    function isOnlyLetters(inputValue) {
+        const regex = /^[a-zA-Z]+$/;
+        return regex.test(inputValue);
+    }
+
+    const attentionParagraph = document.createElement('p');
+    attentionParagraph.textContent = "Please insert only letters!";
+    attentionParagraph.style.width = "100%";
+    attentionParagraph.style.textAlign = "center";
+    attentionParagraph.style.color = "rgb(231, 84, 84)";
+    attentionParagraph.classList.add("att-p");
+    
+    function removeChild() {
+        const child = projectContainer.querySelector(".att-p");
+        if (child) {
+            projectContainer.removeChild(child);
+        }
+    }
+
+    inputElement.addEventListener("input", () => {
+        if(inputElement.value === "") {
+            removeChild();
+        } else if(inputElement.value.trim() !== "") {
+            if(isOnlyLetters(inputElement.value)) {
+                addButton.disabled = false;
+                removeChild();
+            } else {
+                addButton.disabled = true;
+                if (!projectContainer.querySelector(".att-p")) {
+                    projectContainer.appendChild(attentionParagraph);
+                }
+            }
+        } else {
+            addButton.disabled = true;
+            projectContainer.appendChild(attentionParagraph);
+        }
+    });
+}
+
 function handleAddProject() {
     const addProject = document.getElementById("add-project-button");
-    const addProjectContainer = document.getElementById("new-project");
+    const addProjectContainer = addProject.nextElementSibling;
     const inputElement = document.getElementById("new-project-input");
     const cancelButton = document.getElementById("cancel-button");
     const addButton = document.getElementById("add-button");
@@ -221,35 +387,10 @@ function handleAddProject() {
         });
     }
     
-    let numberOfProjects = 1;
-    
-    function isOnlyLetters(inputValue) {
-        const regex = /^[a-zA-Z]+$/;
-        return regex.test(inputValue);
-    }
+    // let numberOfProjects = 1;
 
     function addButtonAction(inputElement, addButton, addProject, addProjectContainer) {
-        const attentionParagraph = document.createElement('p');
-        attentionParagraph.textContent = "Please insert only letters!";
-        attentionParagraph.style.width = "100%";
-        attentionParagraph.style.textAlign = "center";
-        attentionParagraph.style.color = "rgb(231, 84, 84)";
-        attentionParagraph.style.display = "none";
-        addProjectContainer.appendChild(attentionParagraph);
-
-        inputElement.addEventListener("input", () => {
-            if(inputElement.value === "") {
-                attentionParagraph.style.display = "none";
-            } else if(inputElement.value.trim() !== "") {
-                if(isOnlyLetters(inputElement.value)) {
-                    addButton.disabled = false;
-                    attentionParagraph.style.display = "none";
-                } else {
-                    addButton.disabled = true;
-                    attentionParagraph.style.display = "block";
-                }
-            }
-        });
+        inputVerification(addProjectContainer, inputElement, addButton);
     
         addButton.addEventListener("click", () => {
             if(addButton.disabled === false) {
@@ -259,8 +400,6 @@ function handleAddProject() {
                 addTheNewProject(addProject, inputElement);
                 addTheNewPage(inputElement);
                 inputElement.value = "";
-            } else {
-                console.log("Please insert only letters!");
             }
         });
     
@@ -270,7 +409,7 @@ function handleAddProject() {
             newDiv.id = `${inputElement.value}-sidebar`;
             newDiv.classList.add("task-project");
             newDiv.classList.add("prj");
-            numberOfProjects++;
+            // numberOfProjects++;
     
             newDiv.innerHTML = `
                 <div class="sidebar-left-task">
@@ -362,8 +501,6 @@ function handleAddProject() {
             const newProjectPageClass = `access-${inputElement.value}-page`;
             pagAccess.addRelationship(newProjectSidebarId, newProjectPageId, newProjectPageClass);
             pagAccess.configureSidebarAction(newProjectSidebarId, newProjectPageId, newProjectPageClass, true);
-
-
         }
     }
 
