@@ -33,6 +33,13 @@ function openCloseSidebar() {
             optionsContainer.classList.add("hide-options-container");
         });
 
+        const addProject = document.getElementById("add-project-button");
+        const addProjectContainer = addProject.nextElementSibling;
+        const inputElement = document.getElementById("new-project-input");
+
+        addProjectContainer.classList.add("open-close-new-project");
+        addProject.style.display = "flex";
+        inputElement.value = "";
     });
 
 
@@ -40,6 +47,14 @@ function openCloseSidebar() {
         if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
             sidebarContainer?.classList.add("open-close-sidebar");
             overlay.style.display = "none";
+
+            const addProject = document.getElementById("add-project-button");
+            const addProjectContainer = addProject.nextElementSibling;
+            const inputElement = document.getElementById("new-project-input");
+
+            addProjectContainer.classList.add("open-close-new-project");
+            addProject.style.display = "flex";
+            inputElement.value = "";
         }
     });
 }
