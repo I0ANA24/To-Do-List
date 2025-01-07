@@ -2,7 +2,6 @@ import projectIcon  from "../assets/project.svg";
 
 export function handleSidebar() {
     openCloseSidebar();
-    // pagAccess();
     handleAddProject();
 }
 
@@ -124,7 +123,6 @@ const pagAccess = (function pagesAccess() {
                         closeSidebar();
                     }
                 } else if (event.target.classList.contains("options")) {
-                    console.log(event.target.parentElement, "target");
                     addClickEventForOptions(event.target);
                 }
             }
@@ -179,20 +177,13 @@ const pagAccess = (function pagesAccess() {
 
                 function renameAddButtonClickEventFunction() {
                     let optionsParentId = options.parentElement?.id;
-                    console.log(optionsParentId, options);
                     if(renameAddButton.disabled === false) {
-                        console.log(options.parentElement);
                         const optionsParent = document.getElementById(`${optionsParentId}`);
                         if(renameInputButton.value !== "") {
                             optionsParentId = optionsParent.id;
-                            console.log(optionsParentId);
-                            console.log(optionsParent);
-                            console.log(optionsParentId);
                             handleRenameProject(optionsParent);
                             cancelOrOverlay2();
-                            console.log(optionsParent.id);
                             optionsParentId = optionsParent.id;
-                            console.log(optionsParentId, optionsParent.id);
                         }
                     }
 
@@ -201,7 +192,6 @@ const pagAccess = (function pagesAccess() {
             }
 
             function handleRenameProject(optionsParent) {
-                console.log(optionsParent);
                 const sidebarFolder = optionsParent;
                 const sidebarFolderName = sidebarFolder.querySelector("h4");
                 const oldSidebarFolderName = sidebarFolderName.textContent;
@@ -214,8 +204,6 @@ const pagAccess = (function pagesAccess() {
 
                 sidebarFolderName.textContent = renameInputButton.value;
                 sidebarFolder.id = newSidebarId;
-                // options = document.getElementById(`${newSidebarId}`).querySelector(".options");
-                // console.log(options, newSidebarId, document.getElementById(`${newSidebarId}`));
 
                 // Update the relationship in sidebarToPageMap
                 const relationship = sidebarToPageMap.find(rel => rel.getSidebarId() === oldSidebarId);
@@ -245,13 +233,13 @@ const pagAccess = (function pagesAccess() {
     
                         styleSheets.forEach(sheet => {
                             try {
-                                const rules = Array.from(sheet.cssRules || sheet.rules); // Compatibilitate între browsere
+                                const rules = Array.from(sheet.cssRules || sheet.rules); // Cross-browser compatibility
                                 rules.forEach((rule, index) => {
                                     if (rule.selectorText && rule.selectorText.includes(`.access-${oldSidebarFolderName}-page`)) {
-                                        // Creează un selector nou, înlocuind .access-Project-page cu .access-new-page
+                                        // Create a new selector replacing .access-Project-page with .access-new-page
                                         const newSelector = rule.selectorText.replace(`.access-${oldSidebarFolderName}-page`, `.${newPageClass}`);
     
-                                        // Adaugă noua regulă și șterge pe cea veche
+                                        // Add the new rule and delete the old one
                                         sheet.deleteRule(index);
                                         sheet.insertRule(`${newSelector} { ${rule.style.cssText} }`, index);
                                     }
@@ -390,15 +378,15 @@ function inputVerification(projectContainer, inputElement, addButton) {
             removeChild();
             removeChild2();
         } else if(inputElement.value.trim() !== "") {
-            if (isOnlyLetters(inputElement.value) && !existThisProject(inputElement.value)) { //ambele sunt corecte
+            if (isOnlyLetters(inputElement.value) && !existThisProject(inputElement.value)) { // Both are correct
                 addButton.disabled = false;
                 removeChild();
                 removeChild2();
-            } else if (!isOnlyLetters(inputElement.value) && !projectContainer.querySelector(".att-p") && !existThisProject(inputElement.value)) { //doar literele sunt gresite
+            } else if (!isOnlyLetters(inputElement.value) && !projectContainer.querySelector(".att-p") && !existThisProject(inputElement.value)) { // Only the letters are wrong
                 addButton.disabled = true;
                 projectContainer.appendChild(attentionParagraph);
                 removeChild2();
-            } else if (existThisProject(inputElement.value) && !projectContainer.querySelector(".att-p2")) { //proiectul exista deja
+            } else if (existThisProject(inputElement.value) && !projectContainer.querySelector(".att-p2")) { // The project already exists
                 addButton.disabled = true;
                 projectContainer.appendChild(attentionParagraph2);
                 removeChild();
@@ -426,8 +414,6 @@ function handleAddProject() {
             inputElement.focus();
         });
     }
-    
-    // let numberOfProjects = 1;
 
     function addButtonAction(inputElement, addButton, addProject, addProjectContainer) {
         inputVerification(addProjectContainer, inputElement, addButton);
@@ -449,7 +435,6 @@ function handleAddProject() {
             newDiv.id = `${inputElement.value}-sidebar`;
             newDiv.classList.add("task-project");
             newDiv.classList.add("prj");
-            // numberOfProjects++;
     
             newDiv.innerHTML = `
                 <div class="sidebar-left-task">
