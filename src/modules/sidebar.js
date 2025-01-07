@@ -333,12 +333,28 @@ function inputVerification(projectContainer, inputElement, addButton) {
         return regex.test(inputValue);
     }
 
+    function existThisProject(projectName) {
+        const projectSidebarElement = document.getElementById(`${projectName}-sidebar`);
+        if(projectSidebarElement) {
+            return true;
+        }
+
+        return false;
+    }
+
     const attentionParagraph = document.createElement('p');
     attentionParagraph.textContent = "Please insert only letters!";
     attentionParagraph.style.width = "100%";
     attentionParagraph.style.textAlign = "center";
     attentionParagraph.style.color = "rgb(231, 84, 84)";
     attentionParagraph.classList.add("att-p");
+
+    const attentionParagraph2 = document.createElement('p');
+    attentionParagraph2.textContent = "This project already exists!";
+    attentionParagraph2.style.width = "100%";
+    attentionParagraph2.style.textAlign = "center";
+    attentionParagraph2.style.color = "rgb(231, 84, 84)";
+    attentionParagraph2.classList.add("att-p2");
     
     function removeChild() {
         const child = projectContainer.querySelector(".att-p");
@@ -347,22 +363,31 @@ function inputVerification(projectContainer, inputElement, addButton) {
         }
     }
 
+    function removeChild2() {
+        const child2 = projectContainer.querySelector(".att-p2");
+        if (child2) {
+            projectContainer.removeChild(child2);
+        }
+    }
+
     inputElement.addEventListener("input", () => {
         if(inputElement.value === "") {
             removeChild();
+            removeChild2();
         } else if(inputElement.value.trim() !== "") {
-            if(isOnlyLetters(inputElement.value)) {
+            if (isOnlyLetters(inputElement.value) && !existThisProject(inputElement.value)) { //ambele sunt corecte
                 addButton.disabled = false;
                 removeChild();
-            } else {
+                removeChild2();
+            } else if (!isOnlyLetters(inputElement.value) && !projectContainer.querySelector(".att-p") && !existThisProject(inputElement.value)) { //doar literele sunt gresite
                 addButton.disabled = true;
-                if (!projectContainer.querySelector(".att-p")) {
-                    projectContainer.appendChild(attentionParagraph);
-                }
+                projectContainer.appendChild(attentionParagraph);
+                removeChild2();
+            } else if (existThisProject(inputElement.value) && !projectContainer.querySelector(".att-p2")) { //proiectul exista deja
+                addButton.disabled = true;
+                projectContainer.appendChild(attentionParagraph2);
+                removeChild();
             }
-        } else {
-            addButton.disabled = true;
-            projectContainer.appendChild(attentionParagraph);
         }
     });
 }
