@@ -39,6 +39,17 @@ function openCloseSidebar() {
         addProjectContainer.classList.add("open-close-new-project");
         addProject.style.display = "flex";
         inputElement.value = "";
+
+        const attp = document.querySelector(".att-p");
+        const attp2 = document.querySelector(".att-p2");
+
+        if (attp) {
+            attp.remove();
+        }
+
+        if (attp2) {
+            attp2.remove();
+        }
     });
 
 
@@ -146,6 +157,18 @@ const pagAccess = (function pagesAccess() {
                 options.style.removeProperty("display");
                 countElement.style.removeProperty("display");
                 renameProjectContainer.classList.add("hide-rename-project-container");
+
+                const attp = document.querySelector(".att-p");
+                const attp2 = document.querySelector(".att-p2");
+
+                if (attp) {
+                    attp.remove();
+                }
+
+                if (attp2) {
+                    attp2.remove();
+                }
+
             }
 
             overlay2.addEventListener("click", () => {
@@ -157,6 +180,7 @@ const pagAccess = (function pagesAccess() {
             const renameInputButtonsContainer = renameProjectContainer.querySelector(".rename-ib");
             const renameInputButton = renameInputButtonsContainer.querySelector("#new-project-input");
             const renameAddButton = renameInputButtonsContainer.querySelector("#add-button");
+            const renameCancelButton = renameInputButtonsContainer.querySelector("#cancel-button");
 
             renameElement.addEventListener("click", renameElementClickEventFunction);
 
@@ -167,6 +191,11 @@ const pagAccess = (function pagesAccess() {
                 optionsContainer.classList.add("hide-options-container");
 
                 renameEvent(renameInputButtonsContainer, renameInputButton, renameAddButton);
+
+                renameCancelButton.addEventListener("click", () => {
+                    cancelOrOverlay2();
+                    renameInputButton.value = "";
+                });
             }
 
             function renameEvent(renameInputButtonsContainer, renameInputButton, renameAddButton) {
@@ -534,7 +563,18 @@ function handleAddProject() {
             inputElement.value = "";
             addProjectContainer.classList.toggle("open-close-new-project");
             addProject.style.display = "flex";
-        })
+
+            const attp = document.querySelector(".att-p");
+            const attp2 = document.querySelector(".att-p2");
+
+            if (attp) {
+                attp.remove();
+            }
+
+            if (attp2) {
+                attp2.remove();
+            }
+        });
     }
 }
 

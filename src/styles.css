@@ -194,9 +194,10 @@ header h2 {
 
 .sidebar-left-task {
     display: flex;
-    justify-content: center;
+    justify-content: start;
     align-items: center;
     gap: 15px;
+    width: 80%;
 }
 
 .sidebar-left-task img {
@@ -205,6 +206,10 @@ header h2 {
 
 .sidebar-left-task h4 {
     font-weight: 500;
+    max-width: 80%;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
 }
 
 .options-container {
@@ -212,8 +217,8 @@ header h2 {
     flex-direction: column;
     justify-content: center;
     align-items: baseline;
-    width: 100px;
-    height: 65px;
+    width: 90px;
+    height: 55px;
     position: absolute;
     top: 85%;
     right: 10px;
@@ -223,9 +228,8 @@ header h2 {
     border-radius: 7px;
     overflow: hidden;
     z-index: 70000000;
-    padding: 8px;
     border: 1px solid #333;
-    overflow: visible;
+    overflow: hidden;
 }
 
 .hide-options-container {
@@ -237,7 +241,6 @@ header h2 {
     height: 50%;
     display: flex;
     justify-content: center;
-    border-radius: 5px;
 }
 
 .rename {
@@ -354,8 +357,12 @@ main {
 
 main h2 {
     font-weight: 500;
-    margin-bottom: 30px;
     text-align: center;
+    padding: 30px 40px;
+    overflow-wrap: break-word;
+    word-wrap: break-word;
+    white-space: normal;
+    width: 100%;
 }
 
 main .pending-completed {
@@ -515,7 +522,8 @@ main .pc-text {
 }
 
 .rename-project-container h2 {
-    margin-bottom: 30px;
+    margin-bottom: 15px;
+    padding: 0;
 }
 
 .rename-project-container .rename-ib {
