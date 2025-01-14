@@ -113,31 +113,33 @@ const pagAccess = (function pagesAccess() {
     let currentSidebarPageRelationship = sidebarToPageMap[0];
     let currentSidebarPage = document.getElementById(currentSidebarPageRelationship.getPageId());
 
-    const configureSidebarAction = (sidebarId, pageId, pageClass, isNewProject) => {
+    const configureSidebarAction = (sidebarId, pageId, pageClass, isNewProject, isFromDelete) => {
         let sidebarElement = document.getElementById(sidebarId);
         let pageElement = document.getElementById(`${pageId}`);
 
-        sidebarElement?.addEventListener("click", (event) => {
-            if (sidebarId !== currentSidebarPageRelationship.getSidebarId()) {
-                if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
-                    if(!event.target.classList.contains("options")) {
-                        switchPages();
-                        updateCurrentSidebar();
-                        closeSidebar();
-                    } else {
+        if (!isFromDelete) {
+            sidebarElement?.addEventListener("click", (event) => {
+                if (sidebarId !== currentSidebarPageRelationship.getSidebarId()) {
+                    if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
+                        if(!event.target.classList.contains("options")) {
+                            switchPages();
+                            updateCurrentSidebar();
+                            closeSidebar();
+                        } else {
+                            addClickEventForOptions(event.target);
+                        }
+                    }
+                } else {
+                    if (!event.target.classList.contains("options")) {
+                        if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
+                            closeSidebar();
+                        }
+                    } else if (event.target.classList.contains("options")) {
                         addClickEventForOptions(event.target);
                     }
                 }
-            } else {
-                if (!event.target.classList.contains("options")) {
-                    if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
-                        closeSidebar();
-                    }
-                } else if (event.target.classList.contains("options")) {
-                    addClickEventForOptions(event.target);
-                }
-            }
-        });
+            });
+        }
 
         function addClickEventForOptions(options) {
             options.style.display = "block";
@@ -154,9 +156,11 @@ const pagAccess = (function pagesAccess() {
             function cancelOrOverlay2() {
                 optionsContainer.classList.add("hide-options-container");
                 overlay2.style.display = "none";
+                overlay2.style.backgroundColor = "transparent";
                 options.style.removeProperty("display");
                 countElement.style.removeProperty("display");
                 renameProjectContainer.classList.add("hide-rename-project-container");
+                deleteProjectContainer.classList.add("hide-delete-project-container");
 
                 const attp = document.querySelector(".att-p");
                 const attp2 = document.querySelector(".att-p2");
@@ -291,6 +295,54 @@ const pagAccess = (function pagesAccess() {
                 
                 renameInputButton.value = "";
             }
+
+            const deleteElement = optionsContainer.querySelector(".delete");
+            const deleteProjectContainer = document.querySelector(".delete-project-container");
+            deleteElement.addEventListener("click", deleteElementClickEventFunction);
+
+            function deleteElementClickEventFunction() {
+                const optionsParent = options.parentElement;
+                const optionsParentId = optionsParent.id;
+                const pageId = `${optionsParentId.split('-')[0]}-page`;
+                const page = document.getElementById(pageId);
+                const sidebarId = `${optionsParentId}`;
+                const sidebar = document.getElementById(sidebarId);
+
+                deleteProjectContainer.classList.remove("hide-delete-project-container");
+                overlay2.style.backgroundColor = "rgba(0, 0, 0, 0.5)";
+                optionsContainer.classList.add("hide-options-container");
+                deleteEvent(deleteProjectContainer, optionsParentId, sidebarId);
+
+                function deleteEvent(deleteProjectContainer, optionsParentId, sidebarId) {
+                    const deleteAddButton = deleteProjectContainer.querySelector("#add-button");
+                    const deleteCancelButton = deleteProjectContainer.querySelector("#cancel-button");
+
+                    deleteAddButton.addEventListener("click", deleteAddButtonClickEventFunction);
+
+                    function deleteAddButtonClickEventFunction() {
+                        if (currentSidebarPageRelationship.getSidebarId() === sidebarId) {
+                            configureSidebarAction("today-sidebar", "today-page", "access-today-page", false, true);
+                        }
+                        
+                        page.remove();
+                        sidebar.remove();
+
+                        const indexToRemove = sidebarToPageMap.findIndex(item => item.getSidebarId() === sidebarId);
+                        if (indexToRemove !== -1) {
+                            sidebarToPageMap.splice(indexToRemove, 1);
+                        }
+
+                        cancelOrOverlay2();
+                    }
+
+                    deleteCancelButton.addEventListener("click", () => {
+                        deleteProjectContainer.classList.add("hide-delete-project-container");
+                        cancelOrOverlay2();
+                    });
+                }
+
+                
+            }
         }
 
         if(isNewProject === true) {
@@ -301,6 +353,12 @@ const pagAccess = (function pagesAccess() {
             } else {
                 closeSidebar();
             }
+        }
+
+        if(isFromDelete === true) {
+            switchPages();
+            updateCurrentSidebar();
+            closeSidebar();
         }
 
         function switchPages() {
