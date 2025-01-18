@@ -378,7 +378,7 @@ main .pending-completed .pending, main .pending-completed .completed {
     width: 150px;
     max-width: 35vw;
     padding: 15px;
-    border-radius: 10px;
+    border-radius: 15px;
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -488,7 +488,7 @@ main .pc-text {
 .add-task-button {
     font-size: 1em;
     padding: 12px 45px;
-    border-radius: 15px;
+    border-radius: 25px;
     background-color: var(--primary-color);
     border: 1px solid var(--tertiary-color);
     margin-top: 5vh;
