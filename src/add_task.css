@@ -1,0 +1,178 @@
+:root {
+    --primary-color: #212121;
+    --secondary-color: #2f2f2f;
+    --tertiary-color: #494949;
+    --sidebar-color: #171717;
+    --primary-text: #c0bcbc;
+    --secondary-text: #ececec;
+    --hover-checked-color: #65e665;
+    --checked-color: #4caf50;
+    --high-priority: red;
+    --medium-priority: #dfdf1d;
+    --low-priority: #4caf50;
+}
+
+#add-task-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    height: 450px;
+    width: 350px;
+    max-width: 90vw;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: var(--secondary-color);
+    border-radius: 10px;
+    padding: 0 15px;
+    padding-bottom: 25px;
+}
+
+#add-task-container h2 {
+    color: var(--primary-text);
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+#add-task-container > input, #add-task-container > textarea {
+    width: 100%;
+    height: 40px;
+    padding: 0 10px;
+    border: none;
+    outline: none;
+    background-color: transparent;
+    color: var(--secondary-text);
+}
+
+#add-task-container > input::placeholder, #add-task-container > textarea::placeholder {
+    color: rgb(157, 154, 154);
+}
+
+#add-task-container > input[type="text"] {
+    font-size: 1.2em;
+}
+
+#add-task-container > textarea {
+    font-size: 1em;
+    height: 100px;
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    resize: none;
+    scroll-behavior: smooth;
+}
+
+#add-task-container > textarea::-webkit-scrollbar {
+    width: 0px;
+}
+
+#add-task-container > textarea::-webkit-scrollbar-thumb {
+    background-color: var(--sidebar-color);
+    border-radius: 20px;
+}
+
+#add-task-container > textarea::-webkit-scrollbar-track {
+    background-color: var(--primary-color);
+    border-radius: 20px;
+}
+
+.add-task-container {
+    padding-right: 0;
+}
+
+.add-task-container:hover {
+    cursor: auto;
+    background-color: transparent;
+}
+
+.add-task-container * {
+    color: var(--secondary-text);
+}
+
+.add-task-right-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: right;
+}
+
+.add-task-right-container select, .add-task-right-container input[type="date"] {
+    background-color: transparent;
+    outline: none;
+    border: none;
+    padding-right: 0;
+    text-align: right;
+    font-size: 0.94em;
+}
+
+.add-task-right-container select, .add-task-right-container input[type="date"]:hover {
+    cursor: pointer;
+}
+
+.add-task-right-container select {
+    outline: none;
+    border: none;
+}
+
+.add-task-right-container select option{
+    background-color: var(--secondary-color);
+    outline: none;
+    border: none;
+}
+
+.add-task-right-container input[type="date"] {
+    top: 0;
+    right: 0;
+    height: 100%;
+    width: 100%;
+    color: transparent;
+}
+
+.add-task-right-container input[type="date"]::-webkit-calendar-picker-indicator {
+    width: 100%;
+    height: 100%;
+    position: absolute;
+    top: 0;
+    right: 0;
+    cursor: pointer;
+}
+
+.add-task-right-container label {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding-right: 15px;
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+.hide-default-design {
+    display: block;
+    height: 100%;
+    background-color: var(--secondary-color);
+    position: absolute;
+    top: 0;
+    right: 0;
+}
+
+#priority-hide, #duedate-hide1 {
+    width: 15px;
+}
+
+#duedate-hide2 {
+    left: 0;
+    height: 120%;
+    width: calc(100% - 100px);
+}
+
+input#add-task-button {
+    width: 60%;
+    background-color: green;
+    margin-top: 25px;
+}
+
+input#add-task-button:hover {
+    background-color: rgb(12, 180, 12);
+}

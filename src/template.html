@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>To Do List</title>
     <link rel="stylesheet" href="https:cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.1/css/all.min.css" integrity="sha512-5Hs3dF2AEPkpNAR7UiOHba+lRSJNeM2ECkwxUIxC1Q/FLycGTbNapWXB4tP889k5T5Ju8fs4b1P5z/iB4nMfSQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="add_task.css">
 
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Eagle+Lake&family=Space+Grotesk:wght@300..700&display=swap');
@@ -18,7 +19,7 @@
         <img src="./assets/logo.svg" alt="logo" id="logo-icon">
         <h2>ToDo</h2>
     </header>
-    <div id="sidebar-container" class="sidebar-container">
+    <div id="sidebar-container" class="sidebar-container open-close-sidebar">
         <div id="sidebar-scroll-container">
             <div class="tasks-projects-container">
                 <div id="overlay2"></div>
@@ -317,6 +318,43 @@
                     <button id="add-button" class="cancel-add">Delete</button>
                 </div>
             </div>
+        </div>
+
+        <div id="add-task-container">
+            <h2>Add Task</h2>
+            <input type="text" placeholder="Title">
+            <textarea placeholder="Description" rows="10" cols="10" wrap="hard"></textarea>
+
+            <div id="add-task-priority-container" class="task-project add-task-container">
+                <div class="sidebar-left-task">
+                    <img src="./assets/priority.svg" alt="priority_icon">
+                    <p>Priority</p>
+                </div>
+                <div class="add-task-right-container">
+                    <select id="priority-select">
+                        <option value="none" selected disabled hidden>No Priority</option>
+                        <option value="low">Low Priority</option>
+                        <option value="medium">Medium Priority</option>
+                        <option value="high">High Priority</option>
+                    </select>
+                    <div id="priority-hide" class="hide-default-design"></div>
+                </div>
+            </div>
+
+            <div id="add-task-duedate-container" class="task-project add-task-container">
+                <div class="sidebar-left-task">
+                    <img src="./assets/planned.svg" alt="planned_icon">
+                    <p>Due Date</p>
+                </div>
+                <div class="add-task-right-container">
+                    <label for="duedate-date">Sat, 18 Jan</label>
+                    <input type="date" id="duedate-date" min="" value="2025-01-18">
+                    <div id="duedate-hide1" class="hide-default-design"></div>
+                    <div id="duedate-hide2" class="hide-default-design"></div>
+                </div>
+            </div>
+
+            <input type="button" value="Add Task" id="add-task-button" class="cancel-add">
         </div>
     </main>
 </body>
