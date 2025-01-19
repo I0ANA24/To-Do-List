@@ -28,6 +28,7 @@
     border-radius: 10px;
     padding: 0 15px;
     padding-bottom: 25px;
+    z-index: 4;
 }
 
 #add-task-container.hide-add-task-container {

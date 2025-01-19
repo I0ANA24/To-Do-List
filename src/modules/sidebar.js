@@ -1,5 +1,5 @@
 import projectIcon  from "../assets/project.svg";
-import { switchPages, pageUpdate, addTheNewPage } from "./pages.js";
+import { switchPages, pageUpdate, addTheNewPage, removeThePage, configurePageAction, closeOverlayFromPages } from "./pages.js";
 
 export function handleSidebar() {
     openCloseSidebar();
@@ -55,7 +55,7 @@ function openCloseSidebar() {
 
 
     overlay?.addEventListener("click", (event) => {
-        if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete")) {
+        if (!event.target.classList.contains("rename") && !event.target.classList.contains("delete") && !sidebarContainer.classList.contains("open-close-sidebar")) {
             sidebarContainer?.classList.add("open-close-sidebar");
             overlay.style.display = "none";
 
@@ -63,9 +63,12 @@ function openCloseSidebar() {
             const addProjectContainer = addProject.nextElementSibling;
             const inputElement = document.getElementById("new-project-input");
 
+
             addProjectContainer.classList.add("open-close-new-project");
             addProject.style.display = "flex";
             inputElement.value = "";
+        } else {
+            closeOverlayFromPages(overlay);
         }
     });
 }
@@ -265,7 +268,6 @@ export const pagAccess = (function pagesAccess() {
                 const optionsParent = options.parentElement;
                 const optionsParentId = optionsParent.id;
                 const pageId = `${optionsParentId.split('-')[0]}-page`;
-                const page = document.getElementById(pageId);
                 const sidebarId = `${optionsParentId}`;
                 const sidebar = document.getElementById(sidebarId);
 
@@ -285,7 +287,7 @@ export const pagAccess = (function pagesAccess() {
                             configureSidebarAction("today-sidebar", "today-page", "access-today-page", false, true);
                         }
                         
-                        page.remove();
+                        removeThePage(pageId);
                         sidebar.remove();
 
                         const indexToRemove = sidebarToPageMap.findIndex(item => item.getSidebarId() === sidebarId);
@@ -368,6 +370,8 @@ export const pagAccess = (function pagesAccess() {
             relationship.getPageClass(),
             false
         );
+
+        configurePageAction(relationship.getPageId());
     });
 
     return { configureSidebarAction, addRelationship };
@@ -515,4 +519,3 @@ function handleAddProject() {
         });
     }
 }
-
