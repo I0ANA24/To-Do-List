@@ -1,5 +1,5 @@
 import projectIcon  from "../assets/project.svg";
-import { switchPages, pageUpdate, addTheNewPage, removeThePage, configurePageAction, closeOverlayFromPages } from "./pages.js";
+import { switchPages, pageUpdate, addTheNewPage, removeThePage, configurePageAction } from "./pages.js";
 
 export function handleSidebar() {
     openCloseSidebar();
@@ -67,8 +67,6 @@ function openCloseSidebar() {
             addProjectContainer.classList.add("open-close-new-project");
             addProject.style.display = "flex";
             inputElement.value = "";
-        } else {
-            closeOverlayFromPages(overlay);
         }
     });
 }
@@ -180,8 +178,8 @@ export const pagAccess = (function pagesAccess() {
             }
 
             overlay2.addEventListener("click", () => {
-               cancelOrOverlay2();
-               renameInputButton.value = "";
+                cancelOrOverlay2();
+                renameInputButton.value = "";
             });
 
             const renameElement = optionsContainer.querySelector(".rename");

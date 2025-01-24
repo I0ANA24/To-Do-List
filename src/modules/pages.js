@@ -1,4 +1,4 @@
-import { handleAddTask, closeOverlayFromClick } from "./tasks/addTask.js";
+import { handleAddTask } from "./tasks/addTask.js";
 import { pagAccess } from "./sidebar.js";
 
 export function switchPages(pageElement, pageClass, currentSidebarPage, currentSidebarPageRelationship) {
@@ -131,11 +131,10 @@ export function removeThePage(pageId) {
 
 export function configurePageAction(pageId) {
     const page = document.getElementById(`${pageId}`);
-    const addTaskButton = page.querySelector(".add-task-button");
 
-    addTaskButton.addEventListener("click", () => handleAddTask(page, addTaskButton));
+    handleAddTask(page);
 }
 
-export function closeOverlayFromPages(overlay) {
-    closeOverlayFromClick(overlay);
-}
+// export function closeOverlayFromPages(overlay) {
+//     closeOverlayFromClick(overlay);
+// }
