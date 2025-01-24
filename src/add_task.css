@@ -21,9 +21,9 @@
     width: 350px;
     max-width: 90vw;
     position: absolute;
-    top: 50%;
+    bottom: 50vh;
     left: 50%;
-    transform: translate(-50%, -50%);
+    transform: translate(-50%, +50%);
     background-color: var(--secondary-color);
     border-radius: 10px;
     padding: 0 15px;
@@ -175,7 +175,6 @@
 input#add-task-button {
     width: 60%;
     background-color: green;
-    margin-top: 25px;
 }
 
 input#add-task-button:hover {

@@ -12,7 +12,7 @@
     --low-priority: #4caf50;
 }
 
-* {
+*, *::before, *::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
@@ -24,6 +24,15 @@ body {
     width: 100vw;
     min-height: 100vh;
     background-color: var(--primary-color);
+    position: relative;
+    overflow-y: none;
+    overflow-x: hidden;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+}
+
+body::-webkit-scrollbar {
+    display: none;
 }
 
 header {
@@ -337,6 +346,7 @@ header h2 {
 
 main {
     width: 100vw;
+    min-height: 90vh;
     display: flex;
     justify-content: center;
     align-items: baseline;
@@ -491,7 +501,7 @@ main .pc-text {
     border-radius: 25px;
     background-color: var(--primary-color);
     border: 1px solid var(--tertiary-color);
-    margin-top: 5vh;
+    margin: 5vh 0;
     color: var(--secondary-text);
     transition: all 0.1s ease;
 }
